@@ -2,3 +2,10 @@ name = "Binbench"
 uuid = "753a42b6-6c74-4436-b459-dca5f83b7059"
 authors = ["Jakob Nybo Nissen <jakobnybonissen@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+BinBencherBackend = "63a9268e-b9e5-4a07-aba6-1f52d4878f75"
+CodecZlib = "944b1d66-785c-5afd-91f1-9de20f533193"
+FASTX = "c2308a5c-f048-11e8-3e8a-31650f418d12"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+Serialization = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
