@@ -1,4 +1,3 @@
-name = "Binbench"
 uuid = "753a42b6-6c74-4436-b459-dca5f83b7059"
 authors = ["Jakob Nybo Nissen <jakobnybonissen@gmail.com>"]
 version = "0.1.0"

@@ -17,7 +17,7 @@ version = "1.0.3"
 
 [[deps.BinBencherBackend]]
 deps = ["AbstractTrees", "CodecZlib", "JSON3", "LazilyInitializedFields", "PrecompileTools", "StructTypes"]
-path = "/home/people/jakni/BinBencherBackend.jl/"
+git-tree-sha1 = "fdeb55687884a44d464429fd6af7a9da298d7d7e"
 uuid = "63a9268e-b9e5-4a07-aba6-1f52d4878f75"
 version = "0.3.0"
 
