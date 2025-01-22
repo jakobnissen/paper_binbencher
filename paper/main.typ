@@ -45,13 +45,15 @@ We introduce BinBencher, a free software suite for benchmarking, and show how Bi
 
 = Introduction
 In the last decade, the number of known microbial species have exploded, largely due to culture-independent methods of discovery, where genomes are reconstructed from nucleotide sequences obtained directly from environmental samples, as done in e.g. @almeida_new_2019 and @parks_recovery_2017.
+// Consider semantic line breaks https://sembr.org
+// (I've got some code I can run to do it, but the diff would be massive, so i won't do it without your say-so)
 In a typical workflow, reads from an environmental sample are _de novo_ assembled to contigs. 
-Even when using the latest metagenomic assemblers with long, accurate reads, genomes are often incompletely assembled, and may be fragmented in several contigs @feng_evaluating_2024 @benoit_high-quality_2024
+Even when using the latest metagenomic assemblers with long, accurate reads, genomes are often incompletely assembled, and may be fragmented in several contigs @feng_evaluating_2024 @benoit_high-quality_2024.
 To reconstruct the original genomes, the contigs can be grouped by their genome of origin, in a process called 'binning'.
 
 Programs used for binning, or 'binners', typically rely on sequence features which correlate probabilistically between sequences of the same genome, such as k-mer composition and co-abundance.
-Therefore, binning is an error-prone process, where most output bins usually does not accurately correspond to genomes, but have some degree of incompleteness or contamination.
-In attempts to improve binning accuracy, there has been a lot of papers published the last years presenting new techniques. We know of at least 19 binners published the last decade, not including updates to existing binners @wu_maxbin_2014 @alneberg_binning_2014 @imelfort_groopm_2014 @kang_metabat_2015 @lin_accurate_2016 @graham_binsanity_2017 @lu_cocacola_2017 @yu_bmc3c_2018 @uritskiy_metawrapflexible_2018 @sieber_recovery_2018 @demaere_bin3c_2019 @wang_solidbin_2019 @nissen_improved_2021 @liu_metadecoder_2022 @pan_deep_2022 @wang_metabinner_2023 @zhang_graph-based_2023 @wang_effective_2024 @lettich_genomeface_2024 @feng_evaluating_2024.
+Therefore, binning is an error-prone process, where most output bins usually do not accurately correspond to genomes, but have some degree of incompleteness or contamination.
+In attempts to improve binning accuracy, there have been many papers published in recent years presenting new techniques. We know of at least 19 binners published the last decade, not including updates to existing binners @wu_maxbin_2014 @alneberg_binning_2014 @imelfort_groopm_2014 @kang_metabat_2015 @lin_accurate_2016 @graham_binsanity_2017 @lu_cocacola_2017 @yu_bmc3c_2018 @uritskiy_metawrapflexible_2018 @sieber_recovery_2018 @demaere_bin3c_2019 @wang_solidbin_2019 @nissen_improved_2021 @liu_metadecoder_2022 @pan_deep_2022 @wang_metabinner_2023 @zhang_graph-based_2023 @wang_effective_2024 @lettich_genomeface_2024 @feng_evaluating_2024.
 
 Typically, the accuracy of a binner is measured by running the binner on a dataset with a known ground truth reference, usually an _in silico_ simulated metagenome or an artificially produced mock community, and comparing the output bins against the reference, as done in e.g. @kang_metabat_2015 @lin_accurate_2016 @wang_solidbin_2019 @nissen_improved_2021 @liu_metadecoder_2022 @pan_deep_2022  @wang_effective_2024  @lettich_genomeface_2024.
 An alternative approach is to directly evaluate the bins, in the absence of a ground truth reference, using statistical models.
@@ -69,7 +71,7 @@ Similarly, MetaBAT2 was _much_ better than VAMB according to @liu_metadecoder_20
 This status quo is bad for users, who can't easily tell which binners really are the best to use, and who rarely have the time to undergo a detailed, systematic study of the many available binners.
 It's also bad for tool developers, because the conflicting claims of accuracy makes it difficult to know which techniques are promising to develop further, and even to know whether the field is making progress in the sense that binners are getting more accurate over time.
 
-Binning is not unique in being a well-studied computational problem with a proliferation of candidate evaluation techniques - parallels can be drawn to the protein folding problem, and the problem of computer vision.
+Binning is not unique in being a well-studied computational problem with a proliferation of candidate evaluation techniques - parallels can be drawn to the protein folding problem and the problem of computer vision.
 Both fields have benefitted greatly from standardized evaluations provided by e.g. CASP@moult_large-scale_1995 and ImageNet@deng_imagenet_2009, respectively.
 In the field of binning, the Critical Assessment of Metagenome Interpretation (CAMI)@sczyrba_critical_2017 and CAMI2@meyer_critical_2022 is a similar initiative that aims to standardize benchmarking of various metagenomic tools, including binners. To this end, they have developed the binning benchmarking tool AMBER@meyer_amber_2018.
 
@@ -77,10 +79,11 @@ In this paper, we will demonstrate how subtle differences in the benchmarking pr
 
 = Results
 == BinBencher can selectively include or disregard microdiversity
-Creators of synthetic datasets may include distinct genomes that are highly similar in order to test how binners handle microdiversity. For example, the GI dataset (see Methods) contains sequences from 98 species that have more than one genome in the dataset. Of these, 33 species have a mean pairwise average nucleotide identity (ANI) between its genomes above 99%, and 12 above 99.9%, according to FastANI v1.34 @jain_high_2018 (@ani). In total, there are 3,371 genome pairs with an ANI $eq.gt$ 99%, and 1,903 pairs $eq.gt$ 99.9%.
+Creators of synthetic datasets may include distinct genomes that are highly similar in order to test how binners handle microdiversity. For example, the GI dataset (see Methods) contains sequences from 98 species that have more than one genome in the dataset. Of these, 33 species have a mean pairwise average nucleotide identity (ANI) between its genomes above 99%, and 12 above 99.9%, according to FastANI v1.34 @jain_high_2018 (@ani). In total, there are 3,371 genome pairs with an ANI $gt.eq$ 99%, and 1,903 pairs $gt.eq$ 99.9%.
+// I assumed this is what you meant. If so, note you can also just do >= for these
 
 #figure(
-  image("ani.svg", width: 100%),
+  image("ani.svg", width: 100%), // None of these figures appear to be committed. I added blank svgs to be able to compile
   caption: [
     #set text(font: "New Computer Modern", size: 8pt)
     Mean average nucleotide identity (ANI) within each multi-genome species in the GI dataset. For every species with more than one genome, the mean ANI was computed across all genome-genome pairs in that species.
@@ -96,10 +99,12 @@ When computing bin precision relative to a genome, sequences from any other geno
 If the researcher does not want to distinguish microdiversity, the bin precision can therefore be significantly underestimated.
 However, if the research objective is to correctly separate microdiversity to resolved strains, then microdiversity in a bin ought to be considered contamination.
 
-BinBencher addresses these conflicting requirements twofold:
+BinBencher addresses these conflicting requirements in two ways:
 First, BinBencher allows contigs to map to any number of underlying genomes, and therefore works correctly when given bins containing contigs from a consensus assembly of different genomes. Second, BinBencher benchmarks on multiple taxonomic ranks simultaneously (see Methods). Thus, the user may define a taxonomic rank that groups highly similar genomes in their dataset, and when benchmarking, the user can choose between BinBencher's metrics at the genome level, or at this higher taxonomic rank.
 
-To illustrate this, of the 109 bins of the GI dataset with recall $eq.gt$ 0.9 and nonzero contamination, 31 had zero contamination when disregarding microdiversity. However, when benchmarking on the taxonomic level of species, none of the reported contamination from any of the 68 contaminated bins with recall $eq.gt$ 0.9 was due to microdiversity (@precision), because genomes from different bacterial species usually differ by more than 5% ANI@jain_high_2018.
+To illustrate this, of the 109 bins of the GI dataset with recall $eq.gt$ 0.9 and nonzero contamination, 31 had zero contamination when disregarding microdiversity. However, when benchmarking on the taxonomic level of species, none of the reported contamination from any of the 68 contaminated bins with recall $eq.gt$ // not changing all of these, in case I'm wrong
+0.9 was due to microdiversity (@precision), because genomes from different bacterial species usually differ by more than 5% ANI@jain_high_2018.
+
 #figure(
   image("precision.svg", width: 100%),
   caption: [
@@ -197,7 +202,7 @@ However, AMBER consumed only 267 MB memory compared to the 688 used to BinBenche
 
 #colbreak()
 = Discussion
-Evaluation is a necessary part of tool development. The chosen method of evaluation ultimately decides if a new tool, or a new development to an existing tool is considered an improvement.
+Evaluation is a necessary part of tool development. The chosen method of evaluation ultimately decides if a new tool, or a new development to an existing tool, is considered an improvement.
 As we have shown in this paper, evaluating metagenomic binnings is not trivial, even with a ground-truth based reference available, but presents multiple pitfalls that can cause wrong or misleading evaluations.
 We believe these misleading evaluations can derail tool development.
 Indeed, during the development of our own binner, VAMB, we chased several promising techniques that turned out to only appear promising because of benchmarking artifacts.
